@@ -51,5 +51,5 @@ jobs:
 
     - name: Run JavaScript Linter
       run: |
-        find ./server/database -name "*.js" -exec jshint --esversion=6 --asi --node {} +
+        find ./server/database -name "*.js" -exec jshint --asi --node {} +
         echo "JavaScript lint completed successfully"
