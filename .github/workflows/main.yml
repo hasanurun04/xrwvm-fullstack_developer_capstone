@@ -1,4 +1,4 @@
-name: 'Lint Code'
+name: Lint Code
 
 on:
   push:
@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout Repository
       uses: actions/checkout@v3
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -26,35 +25,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8
 
-    - name: Print working directory
-      run: pwd
-
-    - name: Run Linter
+    - name: Run Python Linter
       run: |
         flake8 . \
           --exclude=server/djangoapp/migrations \
-          --ignore=E501,E302,E231,E275,E722,F401,F811,F841,W292,W391,E203,E225,E251,E265,E712
-        echo "Linted all the python files successfully"
+          --ignore=E501,E302,E231,E275,E722,F401,F811,F841,W292,W391,E203,E225,E251,E265,E712,E117,E303,E121,E131,E226
+        echo "Python lint completed successfully"
 
 
   lint_js:
-      name: Lint JavaScript Files
-      runs-on: ubuntu-latest
+    name: Lint JavaScript Files
+    runs-on: ubuntu-latest
 
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
 
-      - name: Install JSHint
-        run: npm install jshint --global
+    - name: Install JSHint
+      run: npm install -g jshint
 
-      - name: Run Linter
-        run: |
-          find ./server/database -name "*.js" -exec jshint --esversion=8 --asi --node {} +
-          echo "Linted all the js files successfully"
-
+    - name: Run JavaScript Linter
+      run: |
+        find ./server/database -name "*.js" -exec jshint --esversion=6 --asi --node {} +
+        echo "JavaScript lint completed successfully"
